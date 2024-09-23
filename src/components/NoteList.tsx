@@ -10,10 +10,20 @@ export const NoteList: React.FC<NoteListProps> = ({notes, onDelete}) => {
   return (
     <div>
       {notes.map((note) => (
-        <div key={note.id}>
-          <h3>{note.title}</h3>
-          <p>{note.content}</p>
-          <button onClick={() => onDelete(note.id)}>削除</button>
+        <div className="container border ml-6 flex flex-col space-y-2" key={note.id}>
+          <h3>title:{note.title}</h3>
+          <p>content:{note.content}</p>
+          <button 
+            className="my-1 px-2 py-2 
+                       border-1 border-blue-500 rounded-md 
+                       bg-gradient-to-b from-blue-600 to-blue-400
+                       hover:from-blue-500 hover:to-blue-300
+                       text-white shadow-lg
+                       "
+            onClick={() => onDelete(note.id)}
+          >
+            削除
+          </button>
         </div>
       ))}
     </div>

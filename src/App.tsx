@@ -16,8 +16,13 @@ const App = () => {
 
   return (
     <div>
-      <NoteForm onSave={handleSaveNote} />
-      <NoteList notes={notes} onDelete={handleDeleteNote} />
+      <div>
+        <p>search</p>
+      </div>
+      <div className='note-view'>
+        <NoteForm onSave={handleSaveNote} />
+        <NoteList notes={notes} onDelete={handleDeleteNote} />
+      </div>
     </div>
   )
 }
