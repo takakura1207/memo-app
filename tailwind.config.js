@@ -10,7 +10,13 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        playwrite: ['"Playwrite DE Grund"', 'sans-serif'],
+        raleway: ['Raleway', 'sans-serif'],
+      },
+    },
+
   },
   plugins: [
     iconsPlugin({

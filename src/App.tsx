@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import './App.css'
 import NoteForm from './components/NoteForm'
 import { Note } from './types/Note'
 import { NoteList } from './components/NoteList'
@@ -24,9 +23,6 @@ const App = () => {
 
   const handleSaveNote = async (newNote: Note) => {
     setNotes((prevNotes) => [...prevNotes, newNote]); // 新しいノートを追加
-
-    // ここで再度ノートをフェッチする必要はない
-    // Supabase に追加したノートの状態を反映するため
   };
 
   const handleDeleteNote = async (id: string) => {
@@ -43,7 +39,7 @@ const App = () => {
   };
 
   return (
-    <div>
+    <div className='font-playwrite'>
       <h1 className='text-center font-bold'>ノートアプリ</h1>
       <div className='note-view'>
         <NoteForm onSave={handleSaveNote} /> {/* onSaveを渡す */}
