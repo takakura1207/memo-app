@@ -1,26 +1,55 @@
 import React, { useState } from 'react';
 import { Note } from '../types/Note';
+import { supabase } from '../supabaseClient';
 
 interface NoteFormProps {
   onSave: (note: Note) => void;
 }
 
+
 const NoteForm: React.FC<NoteFormProps> = ({ onSave }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
-  const handleSubmit = () => {
-    const newNote: Note = {
-      id: new Date().toISOString(),
-      title,
-      content,
-      date: new Date(),
-    };
-    onSave(newNote);
-
-    // 入力欄を空にセット
-    setTitle('');
-    setContent('');
+  const handleSubmit = async () => {
+    if (title.trim() === '' || content.trim() === '') {
+      alert('タイトルと内容は必須です');
+      return;
+    }
+  
+    const { data, error } = await supabase
+      .from('notes')
+      .insert([
+        {
+          title,
+          content,
+          date: new Date(),
+        },
+      ])
+      .select();
+  
+    if (error) {
+      console.error('エラーが発生しました:', error.message);
+      return;
+    }
+  
+    // dataがnullでないことを確認
+    if (data && Array.isArray(data) && data.length > 0) {
+      const newNote: Note = {
+        id: data[0].id, // 新しいノートのIDを取得
+        title,
+        content,
+        date: new Date(),
+      };
+  
+      onSave(newNote); // 親コンポーネントの状態を更新
+  
+      // 入力欄を空にセット
+      setTitle('');
+      setContent('');
+    } else {
+      console.error('挿入後のデータが取得できませんでした。', data);
+    }
   };
 
   return (
